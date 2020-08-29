@@ -48,7 +48,7 @@
 | city                  | string     | null: false                    |
 | address               | string     | null: false                    |
 | building_name         | string     |                                |
-| phone_number          | integer    | null: false                    |
+| phone_number          | string     | null: false                    |
 | user                  | references | null: false, foreign_key: true |
 | item                  | references | null: false, foreign_key: true |
 
