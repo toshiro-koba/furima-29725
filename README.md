@@ -45,9 +45,9 @@
 | --------------------- | ---------- | ------------------------------ |
 | postal_code           | string     | null: false                    |
 | prefectures           | integer    | null: false                    |
-| city                  | integer    | null: false                    |
-| address               | integer    | null: false                    |
-| building_name         | integer    |                                |
+| city                  | string     | null: false                    |
+| address               | string     | null: false                    |
+| building_name         | string     |                                |
 | phone_number          | integer    | null: false                    |
 | user                  | references | null: false, foreign_key: true |
 | item                  | references | null: false, foreign_key: true |
