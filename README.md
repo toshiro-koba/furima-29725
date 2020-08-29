@@ -30,7 +30,7 @@
 | area_id           | integer    | null: false                    |
 | delivery_time_id  | integer    | null: false                    |
 | price             | integer    | null: false                    |
-| user_id           | references | null: false, foreign_key: true |
+| user              | references | null: false, foreign_key: true |
 
 ### Association
 
@@ -53,8 +53,8 @@
 | address               | integer    | null: false                    |
 | building_name         | integer    |                                |
 | phone_number          | integer    | null: false                    |
-| user_id               | references | null: false, foreign_key: true |
-| item_id               | references | null: false, foreign_key: true |
+| user                  | references | null: false, foreign_key: true |
+| item                  | references | null: false, foreign_key: true |
 
 ### Association
 
