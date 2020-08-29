@@ -1,24 +1,62 @@
-# README
+# テーブル設計
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## users テーブル
 
-Things you may want to cover:
+| Column           | Type    | Options     |
+| ---------------- | ------- | ----------- |
+| nickname         | string  | null: false |
+| email            | string  | null: false |
+| password         | string  | null: false |
+| family_name      | string  | null: false |
+| first_name       | string  | null: false |
+| family_name_kana | string  | null: false |
+| first_name_kana  | string  | null: false |
+| birthday_id      | integer | null: false |
 
-* Ruby version
+### Association
 
-* System dependencies
+- has_many :items
+- has_many :sold_items
 
-* Configuration
+## items テーブル
 
-* Database creation
+| Column            | Type       | Options                        |
+| ----------------  | ---------- | ------------------------------ |
+| item_name         | string     | null: false                    |
+| description       | string     | null: false                    |
+| category_id       | integer    | null: false                    |
+| status_id         | integer    | null: false                    |
+| cover_expenses_id | integer    | null: false                    |
+| area_id           | integer    | null: false                    |
+| delivery_time_id  | integer    | null: false                    |
+| price             | integer    | null: false                    |
+| user_id           | references | null: false, foreign_key: true |
 
-* Database initialization
+### Association
 
-* How to run the test suite
+- belongs_to :user
+- has_one :sold_item
+#### 商品画像の添付には、Active Storageを使用します
 
-* Services (job queues, cache servers, search engines, etc.)
 
-* Deployment instructions
+## sold_items テーブル
 
-* ...
+| Column                | Type       | Options                        |
+| --------------------- | ---------- | ------------------------------ |
+| card_number           | integer    | null: false                    |
+| expiration_date_month | integer    | null: false                    |
+| expiration_date_day   | integer    | null: false                    |
+| security_code         | integer    | null: false                    |
+| postal_code           | integer    | null: false                    |
+| prefectures           | integer    | null: false                    |
+| city                  | integer    | null: false                    |
+| address               | integer    | null: false                    |
+| building_name         | integer    |                                |
+| phone_number          | integer    | null: false                    |
+| user_id               | references | null: false, foreign_key: true |
+| item_id               | references | null: false, foreign_key: true |
+
+### Association
+
+- belongs_to :user
+- belongs_to :item
