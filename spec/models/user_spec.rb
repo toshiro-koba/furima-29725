@@ -1,61 +1,129 @@
 require 'rails_helper'
+describe User do
+  before do
+    @user = FactoryBot.build(:user)
+  end
 
-RSpec.describe User, type: :model do
   describe 'ユーザー新規登録' do
-    it "ニックネーム、メールアドレス、パスワード、パスワード(確認用)、ユーザー本名(苗字、名前、苗字(カナ)、名前(カナ))、生年月日が存在すれば、登録できる。" do
+    context '新規登録がうまくいくとき' do
+      it "nicknameとemail、password、password_confirmation、family_name、first_name、family_name_kana、first_name_kana、birthday_idが存在すれば、登録できる" do
+        expect(@user).to be_valid
+      end
     end
-    it "ニックネームが存在しなければ、登録できない。" do
-    end
-    it "メールアドレスが存在しなければ、登録できない。" do
-    end
-    it "メールアドレスがすでに登録してあるものと重複している場合、登録できない。" do
-    end
-    it "メールアドレスに@が含まれていない場合、登録できない。" do
-    end
-    it "パスワードが存在しなければ、登録できない。" do
-    end
-    it "パスワードが６文字以上でないと、登録できない。" do
-    end
-    it "パスワードは半角英数字混合でないと、登録できない。" do
-    end
-    it "パスワード(確認用)が存在しなければ、登録できない。" do
-    end
-    it "パスワードとパスワード(確認用)が一致しない場合、登録できない。" do
-    end
-    it "ユーザー本名(名字)が存在しなければ、登録できない。" do
-    end
-    it "ユーザー本名(名字)は全角（漢字・ひらがな・カタカナ）でなければ、登録できない。" do
-    end
-    it "ユーザー本名(名前)が存在しなければ、登録できない。" do
-    end
-    it "ユーザー本名(名前)は全角（漢字・ひらがな・カタカナ）でなければ、登録できない。" do
-    end
-    it "ユーザー本名(名字(カナ))が存在しなければ、登録できない。" do
-    end
-    it "ユーザー本名(名字(カナ))は全角（カタカナ）でなければ、登録できない。" do
-    end
-    it "ユーザー本名(名前(カナ))が存在しなければ、登録できない。" do
-    end
-    it "ユーザー本名(名前(カナ))は全角（カタカナ）でなければ、登録できない。" do
-    end
-    it "生年月日(年)が存在しなければ、登録できない。" do
-    end
-    it "生年月日(月)が存在しなければ、登録できない。" do
-    end
-    it "生年月日(日)が存在しなければ、登録できない。" do
+    context '新規登録がうまくいかないとき' do
+      it "nicknameが空では、登録できないこと" do
+        @user.nickname = nil
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Nickname can't be blank")
+      end
+      it "emailが空では、登録できないこと" do
+        @user.email = nil
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Email can't be blank")
+      end
+      it "emailがすでに登録してあるものと重複している場合、登録できないこと" do
+        @user.save
+        another_user = FactoryBot.build(:user, email: @user.email)
+        another_user.valid?
+        expect(another_user.errors.full_messages).to include("Email has already been taken")
+      end
+      it "emailに@が含まれていない場合、登録できないこと" do
+        @user.email = "abcde"
+        # binding.pry
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Email is invalid")
+      end
+      it "passwordが空では、登録できないこと" do
+        @user.password = nil
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password can't be blank")
+      end
+      it "passwordが６文字以上でないと、登録できないこと" do
+        @user.password = "12345"
+        @user.password_confirmation = "12345"
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password is too short (minimum is 6 characters)")
+      end
+      it "passwordは半角数字だけでは、登録できないこと" do
+        @user.password = "123456"
+        @user.password_confirmation = "123456"
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password is invalid")
+      end
+      it "passwordは半角英字だけでは、登録できないこと" do
+        @user.password = "abcdef"
+        @user.password_confirmation = "abcdef"
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password is invalid")
+      end
+      it "passwordが存在してもpassword_confirmationが空では、登録できないこと" do
+        @user.password_confirmation = ""
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
+      end
+      it "passwordとpassword_confirmationが一致しない場合、登録できないこと" do
+        @user.password_confirmation = "#{@user.password}add"
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
+      end
+      it "family_nameが空では、登録できないこと" do
+        @user.family_name = ""
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Family name can't be blank", "Family name is invalid")
+      end
+      it "family_nameは全角（漢字・ひらがな・カタカナ）でなければ、登録できないこと" do
+        @user.family_name = "tanaka"
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Family name is invalid")
+      end
+      it "first_nameが空では、登録できないこと" do
+        @user.first_name = ""
+        @user.valid?
+        expect(@user.errors.full_messages).to include("First name can't be blank", "First name is invalid")
+      end
+      it "first_nameは全角（漢字・ひらがな・カタカナ）でなければ、登録できないこと" do
+        @user.first_name = "tarou"
+        @user.valid?
+        expect(@user.errors.full_messages).to include("First name is invalid")
+      end
+      it "family_name_kanaが空では、登録できない" do
+        @user.family_name_kana = ""
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Family name kana can't be blank", "Family name kana is invalid")
+      end
+      it "family_name_kanaは全角（カタカナ）でなければ、登録できない" do
+        @user.family_name_kana = "たなか"
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Family name kana is invalid")
+      end
+      it "first_name_kanaが空では、登録できない" do
+        @user.first_name_kana = ""
+        @user.valid?
+        expect(@user.errors.full_messages).to include("First name kana can't be blank", "First name kana is invalid")
+      end
+      it "first_name_kanaは全角（カタカナ）でなければ、登録できない" do
+        @user.first_name_kana = "たろう"
+        @user.valid?
+        expect(@user.errors.full_messages).to include("First name kana is invalid")
+      end
+      it "birthday_idが存在しなければ、登録できない" do
+        @user.birthday_id = nil
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Birthday can't be blank", "Birthday is the wrong length (should be 8 characters)")
+      end
     end
   end
   describe 'ログイン' do
-    it "メールアドレス、パスワードがすでに登録してあるユーザーと一致すれば、ログインできる。" do
+    it "メールアドレス、パスワードがすでに登録してあるユーザーと一致すれば、ログインできること" do
     end
-    it "メールアドレスが存在しなければ、ログインできない。" do
+    it "メールアドレスが空では、ログインできないこと" do
     end
-    it "パスワードが存在しなければ、ログインできない。" do
+    it "パスワードが空では、ログインできないこと" do
     end
-
   end
   describe 'ログアウト' do
-    it "ログインしている状態で、ログアウトボタンを押せば、ログアウトできる" do
+    it "ログインしている状態で、ログアウトボタンを押せば、ログアウトできること" do
     end
   end
+  
 end
