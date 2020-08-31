@@ -105,10 +105,20 @@ describe User do
         @user.valid?
         expect(@user.errors.full_messages).to include("First name kana is invalid")
       end
-      it "birthday_idが存在しなければ、登録できない" do
-        @user.birthday_id = nil
+      it "birthday_idの内、年が存在しなければ、登録できない" do
+        @user.birthday_id = "-----01-01"
         @user.valid?
-        expect(@user.errors.full_messages).to include("Birthday can't be blank", "Birthday is the wrong length (should be 8 characters)")
+        expect(@user.errors.full_messages).to include("Birthday can't be blank", "Birthday is invalid")
+      end
+      it "birthday_idの内、月が存在しなければ、登録できない" do
+        @user.birthday_id = "2000----01"
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Birthday can't be blank", "Birthday is invalid")
+      end
+      it "birthday_idの内、日が存在しなければ、登録できない" do
+        @user.birthday_id = "2000-01---"
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Birthday can't be blank", "Birthday is invalid")
       end
     end
   end

@@ -15,5 +15,7 @@ class User < ApplicationRecord
         with_options presence: true, format: { with: /\A[ァ-ン]+\z/ } do
           validates :family_name_kana, :first_name_kana
         end
-        validates :birthday_id, presence: true, length: { is: 8 }
+        with_options presence: true, format: { with: /\A\d{4}[-]\d{2}[-]\d{2}\z/ } do
+          validates :birthday_id
+        end
 end
