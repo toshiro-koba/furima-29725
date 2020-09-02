@@ -29,52 +29,52 @@ describe Item do
       it 'category_idが空では、登録できない' do
         @item.category_id = 1
         @item.valid?
-        expect(@item.errors.full_messages).to include('Category must be other than 1')
+        expect(@item.errors.full_messages).to include('Category Select')
       end
       it 'status_idが空では、登録できない' do
         @item.status_id = 1
         @item.valid?
-        expect(@item.errors.full_messages).to include('Status must be other than 1')
+        expect(@item.errors.full_messages).to include('Status Select')
       end
       it 'cover_expense_idが空では、登録できない' do
         @item.cover_expense_id = 1
         @item.valid?
-        expect(@item.errors.full_messages).to include('Cover expense must be other than 1')
+        expect(@item.errors.full_messages).to include('Cover expense Select')
       end
       it 'area_idが空では、登録できない' do
         @item.area_id = 1
         @item.valid?
-        expect(@item.errors.full_messages).to include('Area must be other than 1')
+        expect(@item.errors.full_messages).to include('Area Select')
       end
       it 'delivery_time_idが空では、登録できない' do
         @item.delivery_time_id = 1
         @item.valid?
-        expect(@item.errors.full_messages).to include('Delivery time must be other than 1')
+        expect(@item.errors.full_messages).to include('Delivery time Select')
       end
       it 'priceが空では、登録できない' do
         @item.price = nil
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price can't be blank", 'Price is not a number')
+        expect(@item.errors.full_messages).to include("Price can't be blank", "Price Out of setting range", "Price Half-width number")
       end
       it 'priceが300未満では、登録できない' do
         @item.price = 299
         @item.valid?
-        expect(@item.errors.full_messages).to include('Price must be greater than or equal to 300')
+        expect(@item.errors.full_messages).to include('Price Out of setting range')
       end
       it 'priceが9999999超過では、登録できない' do
         @item.price = 10_000_000
         @item.valid?
-        expect(@item.errors.full_messages).to include('Price must be less than or equal to 9999999')
+        expect(@item.errors.full_messages).to include('Price Out of setting range')
       end
       it 'priceは全角数字では、登録できない' do
         @item.price = '３００'
         @item.valid?
-        expect(@item.errors.full_messages).to include('Price is not a number')
+        expect(@item.errors.full_messages).to include('Price Half-width number')
       end
       it 'priceは英字では、登録できない' do
         @item.price = 'abc'
         @item.valid?
-        expect(@item.errors.full_messages).to include('Price is not a number')
+        expect(@item.errors.full_messages).to include('Price Half-width number')
       end
     end
   end
