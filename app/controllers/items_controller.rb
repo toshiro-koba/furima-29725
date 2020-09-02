@@ -2,6 +2,7 @@ class ItemsController < ApplicationController
   def index
     @items = Item.all
   end
+
   def new
     @item = Item.new
   end
@@ -11,7 +12,7 @@ class ItemsController < ApplicationController
     # Item.create(item_params)
     # binding.pry
     if @item.save
-      redirect_to  root_path
+      redirect_to root_path
     else
       render :new
     end
