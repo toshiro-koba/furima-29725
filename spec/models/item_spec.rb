@@ -54,7 +54,7 @@ describe Item do
       it 'priceが空では、登録できない' do
         @item.price = nil
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price can't be blank", "Price Out of setting range", "Price Half-width number")
+        expect(@item.errors.full_messages).to include("Price can't be blank", 'Price Out of setting range', 'Price Half-width number')
       end
       it 'priceが300未満では、登録できない' do
         @item.price = 299
