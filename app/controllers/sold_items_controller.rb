@@ -19,7 +19,7 @@ class SoldItemsController < ApplicationController
   private
 
   def sold_item_params
-    params.permit(:price, :token)
+    params.permit(:price, :token).merge(item_id: current_item.id)
   end
 
   def pay_item
