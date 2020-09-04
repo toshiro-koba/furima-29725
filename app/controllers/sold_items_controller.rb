@@ -1,14 +1,10 @@
 class SoldItemsController < ApplicationController
-  # require "payjp"
   def index  
     @item =Item.find(params[:item_id])
-    # binding.pry
     if @item.user.id == current_user.id
       redirect_to root_path 
     end
-
     @sold_item = SoldItem.new
-    # @item =Item.find(params[:item_id])
   end
   
   def new
@@ -38,7 +34,7 @@ class SoldItemsController < ApplicationController
   end
 
   def pay_item
-    Payjp.api_key = "sk_test_5b5837b1f44d0df569331e9d"  # PAY.JPテスト秘密鍵
+    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]  # PAY.JPテスト秘密鍵
     Payjp::Charge.create(
       amount: @item[:price],  # 商品の値段
       card: params[:token],    # カードトークン
