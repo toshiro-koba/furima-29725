@@ -16,7 +16,7 @@ class SoldItemsController < ApplicationController
     @item =Item.find(params[:item_id])
     @sold_item = SoldItem.new(order_params)
     if @sold_item.valid?
-      # binding.pry
+      binding.pry
       pay_item
       # binding.pry
       @sold_item.save
@@ -34,6 +34,7 @@ class SoldItemsController < ApplicationController
   end
 
   def pay_item
+    
     Payjp.api_key = ENV["PAYJP_SECRET_KEY"]  # PAY.JPテスト秘密鍵
     Payjp::Charge.create(
       amount: @item[:price],  # 商品の値段
