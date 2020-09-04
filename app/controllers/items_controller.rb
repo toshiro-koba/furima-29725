@@ -1,6 +1,7 @@
 class ItemsController < ApplicationController
   def index
     @items = Item.all
+    @sold_items = SoldItem.all
     # @items = Item.all.order("created_at DESC")  降順のパターン
   end
 

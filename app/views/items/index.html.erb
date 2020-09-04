@@ -130,9 +130,19 @@
           <div class='item-img-content'>
            <%= link_to (image_tag item.image, class:"item-img" if item.image.attached?), "/items/#{item.id}", method: :get  %>
             <%# 商品が売れていればsold outを表示しましょう %>
-            <%# <div class='sold-out'> %>
-              <%# <span>Sold Out!!</span> %>
-            <%# </div> %>
+            <% @sold_items.each do |sold_item| %>
+              <% if sold_item.item.id == item.id %>
+                <div class='sold-out'> 
+              <span>Sold Out!!</span>
+            </div>
+              <% end %>
+            <% end %>
+
+
+
+            <%# <div class='sold-out'> 
+              <span>Sold Out!!</span>
+            </div> %>
             <%# //商品が売れていればsold outを表示しましょう %>
           </div>
           <div class='item-info'>
