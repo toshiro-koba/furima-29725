@@ -9,9 +9,12 @@
     <div class='item-img-content'>
       <%= image_tag @item.image ,class:"item-box-img" %>
       <%# 商品が売れている場合は、sold outを表示しましょう %>
-      <%# <div class='sold-out'> %>
-        <%# <span>Sold Out!!</span> %>
-      <%# </div> %>
+      <% if @sold == 1 %> 
+         <div class='sold-out'> 
+          <span>Sold Out!!</span> 
+        </div> 
+       <% else %> 
+       <% end %>
       <%# //商品が売れている場合は、sold outを表示しましょう %>
     </div>
     <div class="item-price-box">
@@ -31,6 +34,8 @@
       <%= link_to '商品の編集', edit_item_path, method: :get, class: "item-red-btn" %>
       <p class='or-text'>or</p>
       <%= link_to '削除', "#", method: :delete, class:'item-destroy' %>
+
+    <% elsif @sold == 1 %>
 
     <% elsif user_signed_in?  %>
     <%# 商品が売れていない場合はこちらを表示しましょう %>
