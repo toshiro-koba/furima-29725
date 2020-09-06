@@ -7,15 +7,6 @@ const pay = () => {
     const formResult = document.getElementById("charge-form");
     const formData = new FormData(formResult);
  
-    // const card = {
-    //   number: formData.get("card-number"),
-    //   cvc: formData.get("card-cvc"),
-    //   exp_month: formData.get("card-exp-month"),
-    //   exp_year: `20${formData.get("card-exp-year")}`,
-    // };
-
-
-
     const card = {
       number: document.querySelector("#card-number").value,
       cvc: document.querySelector("#card-cvc").value,
