@@ -21,11 +21,11 @@ class ItemsController < ApplicationController
   def show
     @item = Item.find(params[:id])
     @sold_items = SoldItem.all
-    @sold = 0
+    @check_if_sold = 0
       @sold_items.each do |sold_item| 
         
         if @item.id == sold_item.item.id
-            @sold = 1
+            @check_if_sold = 1
             return
         end 
       end 
