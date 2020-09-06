@@ -30,8 +30,7 @@ class ItemsController < ApplicationController
   end
 
   def set_all_items
-    @items = Item.all
-    # @items = Item.all.order("created_at DESC")  降順のパターン
+    @items = Item.all.order("created_at DESC")
   end
 
   def set_item
