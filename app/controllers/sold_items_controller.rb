@@ -1,14 +1,10 @@
 class SoldItemsController < ApplicationController
   before_action :set_item, only: [:index, :create]
   before_action :check_if_current_user_is_seller, only: [:index]
+  before_action :set_all_sold_items, only: [:index]
+  before_action :check_if_sold, only: [:index]
 
   def index  
-    @sold_items = SoldItem.all
-    @sold_items.each do |sold_item| 
-      if @item.id == sold_item.item.id
-        redirect_to root_path 
-      end 
-    end 
     @sold_item = ItemSoldItem.new
   end
   
@@ -50,5 +46,17 @@ class SoldItemsController < ApplicationController
     if @item.user.id == current_user.id
       redirect_to root_path 
     end
+  end
+
+  def set_all_sold_items
+    @sold_items = SoldItem.all
+  end
+
+  def check_if_sold
+    @sold_items.each do |sold_item| 
+      if @item.id == sold_item.item.id
+        redirect_to root_path 
+      end 
+    end 
   end
 end
