@@ -1,7 +1,6 @@
 class ItemSoldItem
-
   include ActiveModel::Model
-  attr_accessor :postal_code, :prefectures_id, :city, :address, :building_name, :phone_number,:sold_item_id, :user_id, :item_id, :token
+  attr_accessor :postal_code, :prefectures_id, :city, :address, :building_name, :phone_number, :sold_item_id, :user_id, :item_id, :token
 
   validates :token, presence: true
   validates :prefectures_id, :city, :address, :phone_number, presence: true
@@ -15,6 +14,4 @@ class ItemSoldItem
     sold_item = SoldItem.create(item_id: item_id, user_id: user_id)
     Address.create(postal_code: postal_code, prefectures_id: prefectures_id, city: city, address: address, building_name: building_name, phone_number: phone_number, sold_item_id: sold_item.id)
   end
-
 end
-

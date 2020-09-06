@@ -44,11 +44,11 @@ class ItemsController < ApplicationController
 
   def check_if_sold
     @check_if_sold = 0
-      @sold_items.each do |sold_item| 
-        if @item.id == sold_item.item.id
-            @check_if_sold = 1
-            return
-        end 
-      end 
+    @sold_items.each do |sold_item|
+      if @item.id == sold_item.item.id
+        @check_if_sold = 1
+        return
+      end
+    end
   end
 end
