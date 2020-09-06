@@ -2,8 +2,7 @@ class ItemSoldItem
   include ActiveModel::Model
   attr_accessor :postal_code, :prefectures_id, :city, :address, :building_name, :phone_number, :sold_item_id, :user_id, :item_id, :token
 
-  validates :token, presence: true
-  validates :prefectures_id, :city, :address, :phone_number, presence: true
+  validates :prefectures_id, :city, :address, :phone_number, :token, presence: true
   validates :phone_number, length: { maximum: 11, message: 'Input correctly' }
   validates :prefectures_id, numericality: { other_than: 1, message: 'Select' }
   VALID_POSTAL_CODE_REGEX =/\A\d{3}[-]\d{4}\z/
