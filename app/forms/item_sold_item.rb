@@ -6,9 +6,10 @@ class ItemSoldItem
   validates :prefectures_id, :city, :address, :phone_number, presence: true
   validates :phone_number, length: { maximum: 11, message: 'Input correctly' }
   validates :prefectures_id, numericality: { other_than: 1, message: 'Select' }
-  with_options presence: true do
-    validates :postal_code, format: { with: /\A\d{3}[-]\d{4}\z/, message: 'Input correctly' }
-  end
+  VALID_POSTAL_CODE_REGEX =/\A\d{3}[-]\d{4}\z/
+  validates :postal_code, presence: true,
+            format: { with: VALID_POSTAL_CODE_REGEX,
+              message: 'Input correctly' }
 
   def save
     sold_item = SoldItem.create(item_id: item_id, user_id: user_id)
