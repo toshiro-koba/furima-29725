@@ -1,6 +1,7 @@
 class SoldItemsController < ApplicationController
+  before_action :set_item, only: [:index, :create]
   def index  
-    @item =Item.find(params[:item_id])
+    
     if @item.user.id == current_user.id
       redirect_to root_path 
     end
@@ -11,7 +12,7 @@ class SoldItemsController < ApplicationController
   end
 
   def create
-    @item =Item.find(params[:item_id])
+    
     @sold_item = ItemSoldItem.new(order_params)
     if @sold_item.valid?
       pay_item
@@ -35,5 +36,9 @@ class SoldItemsController < ApplicationController
       card: order_params[:token],    # カードトークン
       currency:'jpy'                 # 通貨の種類(日本円)
     )
+  end
+
+  def set_item
+    @item =Item.find(params[:item_id])
   end
 end
