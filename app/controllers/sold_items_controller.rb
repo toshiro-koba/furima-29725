@@ -13,7 +13,6 @@ class SoldItemsController < ApplicationController
 
   def create
     @sold_item = ItemSoldItem.new(order_params)
-    binding.pry
     if @sold_item.valid?
       pay_item
       @sold_item.save
