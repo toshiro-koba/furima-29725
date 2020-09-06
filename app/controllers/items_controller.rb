@@ -1,8 +1,9 @@
 class ItemsController < ApplicationController
+  before_action :set_all_items, only: [:index]
+  before_action :set_item, only: [:show]
+  before_action :set_all_sold_items, only: [:index, :show]
+
   def index
-    @items = Item.all
-    @sold_items = SoldItem.all
-    # @items = Item.all.order("created_at DESC")  降順のパターン
   end
 
   def new
@@ -19,8 +20,6 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @item = Item.find(params[:id])
-    @sold_items = SoldItem.all
     @check_if_sold = 0
       @sold_items.each do |sold_item| 
         
@@ -35,5 +34,18 @@ class ItemsController < ApplicationController
 
   def item_params
     params.require(:item).permit(:image, :item_name, :description, :category_id, :status_id, :cover_expense_id, :area_id, :delivery_time_id, :price).merge(user_id: current_user.id)
+  end
+
+  def set_all_items
+    @items = Item.all
+    # @items = Item.all.order("created_at DESC")  降順のパターン
+  end
+
+  def set_item
+    @item = Item.find(params[:id])
+  end
+
+  def set_all_sold_items
+    @sold_items = SoldItem.all
   end
 end
