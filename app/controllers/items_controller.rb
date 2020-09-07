@@ -30,7 +30,7 @@ class ItemsController < ApplicationController
   end
 
   def set_all_items
-    @items = Item.all.order("created_at DESC")
+    @items = Item.all.order('created_at DESC')
   end
 
   def set_item
@@ -41,11 +41,11 @@ class ItemsController < ApplicationController
     @sold_items = SoldItem.all
   end
 
-  def check_if_sold                     #商品が購入済みかどうかを確認する
+  def check_if_sold                     # 商品が購入済みかどうかを確認する
     @sold_items.each do |sold_item|
       if @item.id == sold_item.item.id
-        @sold_item =@item.id            #商品が購入済みの場合のみ、商品idが変数@sold_itemに代入される
-        return 
+        @sold_item = @item.id            # 商品が購入済みの場合のみ、商品idが変数@sold_itemに代入される
+        return
       end
     end
   end

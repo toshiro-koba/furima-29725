@@ -125,44 +125,33 @@
     <h2 class='title'>ピックアップカテゴリー</h2>
     <%= link_to '新規投稿商品', "#", class: "subtitle" %>
     <ul class='item-lists'>
-      <li class='list'>
-        <% @items.each do |item| %>
-          <div class='item-img-content'>
-           <%= link_to (image_tag item.image, class:"item-img" if item.image.attached?), "/items/#{item.id}", method: :get  %>
-            <%# 商品が売れていればsold outを表示しましょう %>
-            <% @sold_items.each do |sold_item| %>
-              <% if sold_item.item.id == item.id %>
-                <div class='sold-out'> 
-              <span>Sold Out!!</span>
+      <% @items.each do |item| %>
+        <%= link_to  item_path(item.id), method: :get do %>
+          <li class='list'>
+            <div class='item-img-content'>
+              <%= image_tag item.image, class:"item-img" if item.image.attached? %>
+                <% if item.sold_item != nil %>
+                  <div class='sold-out'> 
+                    <span>Sold Out!!</span>
+                  </div>
+                <% end %>
             </div>
-              <% end %>
-            <% end %>
-
-
-
-            <%# <div class='sold-out'> 
-              <span>Sold Out!!</span>
-            </div> %>
-            <%# //商品が売れていればsold outを表示しましょう %>
-          </div>
-          <div class='item-info'>
-            <h3 class='item-name'>
-            <%= link_to (item.item_name), "/items/#{item.id}", method: :get %>
-            </h3>
-            <div class='item-price'>
-              <span><%= item.price %>円<br>(税込み)</span>
-              <div class='star-btn'>
-                <%= image_tag "star.png", class:"star-icon" %>
-                <span class='star-count'>0</span>
+            <div class='item-info'>
+              <h3 class='item-name'>
+                <%= item.item_name %>
+              </h3>
+              <div class='item-price'>
+                <span><%= item.price %>円<br>(税込み)</span>
+                <div class='star-btn'>
+                  <%= image_tag "star.png", class:"star-icon" %>
+                  <span class='star-count'>0</span>
+                </div>
               </div>
             </div>
-          </div>
           </a>
-          <% end %>
-      </li>
-
-      <%# 商品がない場合のダミー %>
-      <%# 商品がある場合は表示されないようにしましょう %>
+          </li>
+        <% end %>
+      <% end %>
       <% if @tweet == 0 %>
       <li class='list'>
         <%= link_to '#' do %>
@@ -182,11 +171,10 @@
         <% end %>
         <% end %>
       </li> 
-      <%# //商品がある場合は表示されないようにしましょう %>
-      <%# /商品がない場合のダミー %>
     </ul>
   </div>
   <%# /商品一覧 %>
+
 </div>
 <div class='purchase-btn'>
   <span class='purchase-btn-text'>出品する</span>
