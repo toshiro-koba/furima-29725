@@ -18,6 +18,12 @@ class SoldItemsController < ApplicationController
       @sold_item.save
       redirect_to root_path
     else
+      @sold_item.postal_code = ""
+      @sold_item.prefectures_id = ""
+      @sold_item.city = ""
+      @sold_item.address = ""
+      @sold_item.building_name = ""
+      @sold_item.phone_number = ""
       render :index
     end
   end
