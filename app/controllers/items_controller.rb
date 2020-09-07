@@ -28,10 +28,7 @@ class ItemsController < ApplicationController
   end
 
   def update
-    if @item.update(item_params)
-    else
-      render :edit
-    end
+    render :edit unless @item.update(item_params)
   end
 
   private
