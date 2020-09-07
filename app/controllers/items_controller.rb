@@ -31,6 +31,11 @@ class ItemsController < ApplicationController
     render :edit unless @item.update(item_params)
   end
 
+  def destroy
+    item = Item.find(params[:id])
+    item.destroy
+  end
+
   private
 
   def item_params
