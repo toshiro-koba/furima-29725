@@ -126,7 +126,7 @@
     <%= link_to '新規投稿商品', "#", class: "subtitle" %>
     <ul class='item-lists'>
       <% @items.each do |item| %>
-        <%= link_to  "/items/#{item.id}", method: :get do %>
+        <%= link_to  item_path(item.id), method: :get do %>
           <li class='list'>
             <div class='item-img-content'>
               <%= image_tag item.image, class:"item-img" if item.image.attached? %>
