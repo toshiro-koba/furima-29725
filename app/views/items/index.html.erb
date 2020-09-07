@@ -130,7 +130,6 @@
           <li class='list'>
             <div class='item-img-content'>
               <%= image_tag item.image, class:"item-img" if item.image.attached? %>
-              <%# 商品が売れていればsold outを表示しましょう %>
               <% @sold_items.each do |sold_item| %>
                 <% if sold_item.item.id == item.id %>
                   <div class='sold-out'> 
@@ -138,7 +137,6 @@
                   </div>
                 <% end %>
               <% end %>
-              <%# //商品が売れていればsold outを表示しましょう %>
             </div>
             <div class='item-info'>
               <h3 class='item-name'>
@@ -156,9 +154,6 @@
           </li>
         <% end %>
       <% end %>
-      
-      <%# 商品がない場合のダミー %>
-      <%# 商品がある場合は表示されないようにしましょう %>
       <% if @tweet == 0 %>
       <li class='list'>
         <%= link_to '#' do %>
@@ -178,12 +173,10 @@
         <% end %>
         <% end %>
       </li> 
-      <%# //商品がある場合は表示されないようにしましょう %>
-      <%# /商品がない場合のダミー %>
     </ul>
   </div>
   <%# /商品一覧 %>
-  
+
 </div>
 <div class='purchase-btn'>
   <span class='purchase-btn-text'>出品する</span>
