@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   before_action :set_all_items, only: [:index]
-  before_action :set_item, only: [:show, :edit]
+  before_action :set_item, only: [:show, :edit, :update]
   before_action :set_all_sold_items, only: [:index, :show]
   before_action :check_if_sold, only: [:show]
 
@@ -27,11 +27,9 @@ class ItemsController < ApplicationController
   end
 
   def update
-    @item = Item.find(params[:id])
     @item.update(item_params)
     if @item.valid?
       @item.save
-
     else
       render :edit
     end
