@@ -1,8 +1,8 @@
 class ItemsController < ApplicationController
   before_action :set_all_items, only: [:index]
-  before_action :set_item, only: [:show, :edit, :update]
-  before_action :check_if_user_signed_in, only: [:new, :create, :edit]
-  before_action :check_if_current_user_is_seller, only: [:edit]
+  before_action :set_item, only: [:show, :edit, :update, :destroy]
+  before_action :check_if_user_signed_in, only: [:new, :create, :edit, :destroy]
+  before_action :check_if_current_user_is_seller, only: [:edit, :destroy]
   before_action :set_all_sold_items, only: [:index, :show]
   before_action :check_if_sold, only: [:show]
   def index
@@ -32,8 +32,8 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    item = Item.find(params[:id])
-    item.destroy
+    @item = Item.find(params[:id])
+    @item.destroy
   end
 
   private
