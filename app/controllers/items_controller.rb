@@ -1,9 +1,10 @@
 class ItemsController < ApplicationController
   before_action :set_all_items, only: [:index]
   before_action :set_item, only: [:show, :edit, :update]
+  before_action :check_if_user_signed_in, only: [:edit]
+  before_action :check_if_current_user_is_seller, only: [:edit]
   before_action :set_all_sold_items, only: [:index, :show]
   before_action :check_if_sold, only: [:show]
-
   def index
   end
 
@@ -47,6 +48,18 @@ class ItemsController < ApplicationController
 
   def set_item
     @item = Item.find(params[:id])
+  end
+
+  def check_if_user_signed_in
+    unless user_signed_in?
+      redirect_to root_path
+    end
+  end
+
+  def check_if_current_user_is_seller
+    unless @item.user.id == current_user.id
+      redirect_to root_path
+    end
   end
 
   def set_all_sold_items
