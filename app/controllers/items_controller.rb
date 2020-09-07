@@ -51,15 +51,11 @@ class ItemsController < ApplicationController
   end
 
   def check_if_user_signed_in
-    unless user_signed_in?
-      redirect_to root_path
-    end
+    redirect_to root_path unless user_signed_in?
   end
 
   def check_if_current_user_is_seller
-    unless @item.user.id == current_user.id
-      redirect_to root_path
-    end
+    redirect_to root_path unless @item.user.id == current_user.id
   end
 
   def set_all_sold_items
