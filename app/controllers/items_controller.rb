@@ -28,9 +28,7 @@ class ItemsController < ApplicationController
   end
 
   def update
-    @item.update(item_params)
-    if @item.valid?
-      @item.save
+    if @item.update(item_params)
     else
       render :edit
     end
